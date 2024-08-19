@@ -195,8 +195,8 @@ def solve_rev_vectorized_batch(As,x0s,node_types,thetas,distance_to_locking = Fa
         
         l_ijs = torch.linalg.norm(x[np.arange(x0s.shape[0]),inds[:,0]] - x[np.arange(x0s.shape[0]),inds[:,1]], dim=-1)
         
-        gik = torch.unsqueeze(Gs[np.arange(x0s.shape[0]),inds[:,0],np.ones(shape=[x0s.shape[0]])*k],-1)
-        gjk = torch.unsqueeze(Gs[np.arange(x0s.shape[0]),inds[:,1],np.ones(shape=[x0s.shape[0]])*k],-1)
+        gik = torch.unsqueeze(Gs[np.arange(x0s.shape[0]),inds[:,0],np.ones(shape=[x0s.shape[0]]).astype(np.int32)*k],-1)
+        gjk = torch.unsqueeze(Gs[np.arange(x0s.shape[0]),inds[:,1],np.ones(shape=[x0s.shape[0]]).astype(np.int32)*k],-1)
         
         cosphis = (torch.square(l_ijs) + torch.square(gik) - torch.square(gjk))/(2 * l_ijs * gik)
         

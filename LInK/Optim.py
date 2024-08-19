@@ -27,6 +27,7 @@ def cosine_search(target_emb, atlas_emb, max_batch_size = 1000000, ids = None):
 
     return ids[(-sim).argsort()], sim
 
+@torch.compile
 def batch_chamfer_distance(c1,c2):
     
     with torch.no_grad():
@@ -40,6 +41,7 @@ def batch_chamfer_distance(c1,c2):
 
     return d1 + d2
 
+@torch.compile
 def batch_ordered_distance(c1,c2):
     with torch.no_grad():
         C = torch.cdist(c2,c1)
@@ -68,7 +70,7 @@ def batch_ordered_distance(c1,c2):
     
     return ds
 
-
+@torch.compile
 def ordered_objective_batch(c1,c2):
     with torch.no_grad():
         C = torch.cdist(c2,c1)
@@ -162,7 +164,7 @@ def make_batch_optim_obj_partial(curve, partial,As,x0s,node_types,timesteps=2000
     tiled_curves = apply_transforms(tiled_curves,tr,sc,-an)
     
     tiled_curves_uni = uniformize(tiled_curves,timesteps)
-    
+
     def objective(x0s_current):
         with torch.enable_grad():
             current_x0 = torch.nn.Parameter(x0s_current,requires_grad = True).to(x0s_current.device)

@@ -107,10 +107,10 @@ def BFGS_Minimal(payload, progress=None, device=None, curve_size=200, smoothing=
     prog2 = None
     
     for i in range(n_repos):
-        x,f = Batch_BFGS(x0s, obj, max_iter=BFGS_max_iter//(n_repos+1), line_search_max_iter=BFGS_lineserach_max_iter, tau=BFGS_line_search_mult, threshhold=0.03, progress=lambda x: demo_progress_updater([x[0]/(n_repos+1) + i/(n_repos+1),x[1]],progress,desc='Stage 2: '))
+        x,f = Batch_BFGS(x0s, obj, max_iter=BFGS_max_iter//(n_repos+1), line_search_max_iter=BFGS_lineserach_max_iter, tau=BFGS_line_search_mult, threshhold=0.04, progress=lambda x: demo_progress_updater([x[0]/(n_repos+1) + i/(n_repos+1),x[1]],progress,desc='Stage 2: '))
         x0s = x
     
-    x,f = Batch_BFGS(x0s, obj, max_iter=BFGS_max_iter - n_repos* BFGS_max_iter//(n_repos+1), line_search_max_iter=BFGS_lineserach_max_iter, tau=BFGS_line_search_mult, threshhold=0.03, progress=lambda x: demo_progress_updater([x[0]/(n_repos+1) + n_repos/(n_repos+1),x[1]],progress,desc='Stage 2: '))
+    x,f = Batch_BFGS(x0s, obj, max_iter=BFGS_max_iter - n_repos* BFGS_max_iter//(n_repos+1), line_search_max_iter=BFGS_lineserach_max_iter, tau=BFGS_line_search_mult, threshhold=0.04, progress=lambda x: demo_progress_updater([x[0]/(n_repos+1) + n_repos/(n_repos+1),x[1]],progress,desc='Stage 2: '))
     
     best_idx = f.argmin()
 
@@ -260,11 +260,11 @@ with gr.Blocks(css=css, js=draw_script) as block:
             
             n_freq = gr.Slider(minimum = 3 , maximum = 50, value=7, step=1, label="Number of Frequenceies For smoothing", interactive=True)
             maximum_joint_count = gr.Slider(minimum = 6 , maximum = 20, value=14, step=1, label="Maximum Joint Count", interactive=True)
-            time_steps = gr.Slider(minimum = 200 , maximum = 5000, value=2000, step=1, label="Number of Simulation Time Steps", interactive=True)
-            top_n = gr.Slider(minimum = 50 , maximum = 1000, value=300, step=1, label="Top N Candidates To Start With", interactive=True)
+            time_steps = gr.Slider(minimum = 200 , maximum = 5000, value=1000, step=1, label="Number of Simulation Time Steps", interactive=True)
+            top_n = gr.Slider(minimum = 50 , maximum = 1000, value=100, step=1, label="Top N Candidates To Start With", interactive=True)
             init_optim_iters = gr.Slider(minimum = 10 , maximum = 50, value=20, step=1, label="Initial Optimization Iterations On All Candidates", interactive=True)
-            top_n_level2 = gr.Slider(minimum = 10 , maximum = 100, value=30, step=1, label="Top N Candidates For Final Optimization", interactive=True)
-            BFGS_max_iter = gr.Slider(minimum = 50 , maximum = 500, value=200, step=1, label="Iterations For Final Optimization", interactive=True)
+            top_n_level2 = gr.Slider(minimum = 10 , maximum = 100, value=20, step=1, label="Top N Candidates For Final Optimization", interactive=True)
+            BFGS_max_iter = gr.Slider(minimum = 50 , maximum = 500, value=100, step=1, label="Iterations For Final Optimization", interactive=True)
         
     with gr.Row():
         with gr.Row():
