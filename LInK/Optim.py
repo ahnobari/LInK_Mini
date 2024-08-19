@@ -27,7 +27,7 @@ def cosine_search(target_emb, atlas_emb, max_batch_size = 1000000, ids = None):
 
     return ids[(-sim).argsort()], sim
 
-@torch.compile
+# @torch.compile
 def batch_chamfer_distance(c1,c2):
     
     with torch.no_grad():
@@ -41,7 +41,7 @@ def batch_chamfer_distance(c1,c2):
 
     return d1 + d2
 
-@torch.compile
+# @torch.compile
 def batch_ordered_distance(c1,c2):
     with torch.no_grad():
         C = torch.cdist(c2,c1)
@@ -70,7 +70,7 @@ def batch_ordered_distance(c1,c2):
     
     return ds
 
-@torch.compile
+# @torch.compile
 def ordered_objective_batch(c1,c2):
     with torch.no_grad():
         C = torch.cdist(c2,c1)
